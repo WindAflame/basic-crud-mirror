@@ -3,7 +3,7 @@ import os
 
 from pydantic import TypeAdapter
 
-from models.book import Book
+from ..models.book import Book
 
 BOOKS_JSON_PATH = "resources/books.json"
 BOOKS: list[Book] = []
