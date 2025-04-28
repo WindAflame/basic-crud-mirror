@@ -1,4 +1,0 @@
-Flask
-Flask-RESTx
-flask-swagger-ui
-gunicorn

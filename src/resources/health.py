@@ -1,5 +1,6 @@
 import time
-from flask_restx import Resource, Namespace
+
+from flask_restx import Namespace, Resource
 
 import datastore
 

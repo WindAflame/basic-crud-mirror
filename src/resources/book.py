@@ -1,10 +1,11 @@
 import json
+
 from flask import request
 from flask_restx import Namespace, Resource
 
 import datastore
-from models.book import Book
 from models.api_models import book_model
+from models.book import Book
 
 ns = Namespace('books', description='Manage a bookstore')
 

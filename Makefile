@@ -5,11 +5,8 @@
 install-apt:
 	xargs apt-get -y install < apt-requirements.txt
 
-install: install-apt
-	pip3 install --user -r requirements-lock.txt
-
-install-dev:
-	pip3 install --user -r requirements.txt
+install: 
+	uv sync
 
 ##########################################################################
 ### Building
@@ -18,20 +15,15 @@ install-dev:
 build:
 	pass
 
-freeze-requirements:
-	pip3 freeze > requirements-lock.txt
-
-##########################################################################
-### Development
-##########################################################################
-
-workspace:
-	python 3 -m venv .venv
-	${make} install-dev
+freeze:
+	uv lock
 
 ##########################################################################
 ### Runtime
 ##########################################################################
 
+dev: 
+	uv run flask run --reload --debug
+
 start:
-	gunicorn --chdir ./src main:app --reload
+	uv run flask run
