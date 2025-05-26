@@ -1,4 +1,4 @@
 [ 
-    {"title": "Ash Ketchum, Pokémon Detective", "author": "Tracey West", "category": "fiction"},
-    {"title": "Pokémon Adventures", "author": "Hidenori Kusaka", "category": "kodomo fiction"}
+    {"id": 0, "title": "Ash Ketchum, Pokémon Detective", "author": "Tracey West", "category": "fiction"},
+    {"id": 1, "title": "Pokémon Adventures", "author": "Hidenori Kusaka", "category": "kodomo fiction"}
 ]

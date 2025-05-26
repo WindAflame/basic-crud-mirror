@@ -1,0 +1,1 @@
+BOOKS_JSON_PATH = "resources/books.json"

@@ -1,46 +1,50 @@
+from http import HTTPStatus
 import json
 
 from flask import request
 from flask_restx import Namespace, Resource
 
-import datastore
-from models.api_models import book_model
+from dao.book_dao import BookDAO
+import datastore as DS
+from models.api_models import book_model, book_parser
 from models.book import Book
 
 ns = Namespace('books', description='Manage a bookstore')
-
+dao = BookDAO()
 
 @ns.route('/', endpoint='')
 class BooksGETResource(Resource):
+
+    @ns.response(HTTPStatus.OK.value, "Get the book list")
     @ns.marshal_list_with(book_model)
     def get(self):
-        return datastore.books, 200
+        """
+        Returns Books from database
+        """
+        return dao.read_all(), 200
 
 
 @ns.route('/create_book', endpoint='create_book')
 class BooksPOSTResource(Resource):
-    @ns.expect(book_model)
+    
+    @ns.response(HTTPStatus.OK.value, "Object added")
+    @ns.expect(book_parser)
     def post(self):
-        book = json.loads(request.data)
-        _check_required_fields(book, ['title', 'author', 'category'])
-        datastore.books.append(book)
-        return book, 200
+        """
+        Create a book
+        """
+        args = book_parser.parse_args()
+        book = Book(**args)
+        book.id = len(DS.books)
+        return dao.create(book).to_dict(), 200
 
 
 @ns.route('/update_book', endpoint='update_book')
 class BooksPUTResource(Resource):
     @ns.expect(book_model)
     def put(self):
-        book = json.loads(request.data)
-        _check_required_fields(book, ['title', 'author', 'category'])
-        book_obj = Book(**book)
-        book_finded, book_index = _find_book_in_bookstore(book_obj)
-        book_finded_obj = Book(**book_finded)
-        book_finded_obj.author = book_obj.author
-        book_finded_obj.category = book_obj.category
-        book_finded = book_finded_obj.to_dict()
-        datastore.books[book_index] = book_finded
-        return book_finded, 200
+        book = Book(**book_model)
+        return dao.update(book['id'], Book(**book)).to_dict(), 200
 
 
 @ns.route('/delete_book/<string:title>')
@@ -53,29 +57,17 @@ class BooksDELETEResource(Resource):
             'category': ""
         })
         _, book_index = _find_book_in_bookstore(dumb_book)
-        if book_index >= 0:
-            del datastore.books[book_index]
-            return 1, 200
-        return 0, 200
+        return dao.delete(book_index), 200
 
 
 def _find_book_in_bookstore(book: Book):
     book_finded: Book | None = None
     book_index: int | None = None
 
-    for index, b in enumerate(datastore.books):
+    for index, b in enumerate(DS.books):
         if b['title'].casefold() == book.title.casefold():
             book_finded = b
             book_index = index
             break
 
     return book_finded, book_index
-
-
-def _check_required_fields(object, required_fields: list[str]):
-    fields_not_found = []
-    for field in required_fields:
-        if object[field] == None:
-            fields_not_found.append(field)
-    if fields_not_found:
-        raise ValueError('Missing fields : ' + fields_not_found)

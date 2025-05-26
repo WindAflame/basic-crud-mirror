@@ -1,16 +1,18 @@
 from flask_restx import fields
 
 book_fields = {
-    'title': fields.String(description="Title of the book"),
-    'author': fields.String(description="Author of the book"),
-    'category': fields.String(description="Category of the book")
+    'id': fields.Integer(description="Identifier of the book", required=False),
+    'title': fields.String(description="Title of the book", required=True),
+    'author': fields.String(description="Author of the book", required=True),
+    'category': fields.String(description="Category of the book", required=True)
 }
 
-
 class Book():
-    title = fields.String(description="Title of the book")
-    author = fields.String(description="Author of the book")
-    category = fields.String(description="Category of the book")
+
+    id: int | None
+    title: str
+    author: str
+    category: str
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -18,9 +20,3 @@ class Book():
 
     def to_dict(self):
         return {key: getattr(self, key) for key in book_fields}
-
-
-# class Book():
-#     title = fields.String(description="Title of the book")
-#     author = fields.String(description="Author of the book")
-#     category = fields.String(description="Category of the book")
