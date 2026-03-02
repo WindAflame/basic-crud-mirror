@@ -44,5 +44,5 @@ Regardless of the language or framework chosen, every contribution must satisfy 
 Add a row to the table in [propositions/index.md](propositions/index.md):
 
 ```markdown
-| YourGithubName | propositions/YourGithubName/back_yourframework | Language | [Framework](https://framework-url) | [View on GitHub](https://github.com/your-username/your-repo/tree/your-branch) |
+| YourGithubName | [propositions/YourGithubName/back_yourframework](https://github.com/your-username/your-repo/tree/your-branch) | Language | [Framework](https://framework-url) | Short description of your implementation |
 ```
