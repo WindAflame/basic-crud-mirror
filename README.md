@@ -10,6 +10,10 @@ The specifications are drawn from personal experience and are intended to reprod
 - [Resources](docs/02-resources.md) — data models, REST API contract, and frontend interfaces
 - [Guidelines](docs/03-guidelines.md) — rules every implementation must follow
 
+## Propositions
+
+See [propositions/index.md](propositions/index.md) for the list of all submitted implementations.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions on how to add your own implementation.
