@@ -1,19 +1,21 @@
 # front_vanilla
 
-Minimal BookStore frontend with no dependencies — a single HTML file.
+Minimal BookStore frontend with no UI framework — `index.html` + `main.js` ES module.
 
-Intended as a reference implementation: no framework, no build step, fully spec-compliant.
+Intended as a reference implementation: no UI framework, no bundler config, fully spec-compliant.
 
 ## Approach
 
-- Single file `index.html` — all HTML, CSS, and JavaScript
-- No framework, no dependencies, no build step
-- Served with [Vite](https://vite.dev) (hot reload, no config needed for vanilla HTML/JS)
-- DOM manipulation (no innerHTML with data, to avoid XSS)
+- `index.html` — markup and CSS
+- `main.js` — ES module with all CRUD logic (`fetch` calls, DOM rendering)
+- No UI framework, no bundler config
+- Served with [Vite](https://vite.dev) (dev server with hot reload, zero config for vanilla HTML/JS)
+- DOM manipulation via `textContent` (no `innerHTML` with data, to avoid XSS)
 
 ## Run
 
 ```sh
+make install
 make dev
 ```
 
@@ -37,5 +39,5 @@ localStorage.setItem('API_URL', 'http://your-backend:8000')
 | Edit book | Form pre-filled, submits `PUT /books/update_book` |
 | Delete book | Button calls `DELETE /books/delete_book/:title` |
 | Configurable backend URL | `localStorage` override |
-| Makefile | `make install` (no-op) + `make dev` |
+| Makefile | `make install` (`npm install`) + `make dev` |
 | Dev environment | `.devcontainer/devcontainer.json` |
